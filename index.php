@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz & Learning Platform</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container-box">
+    <h1>Welcome to the Quiz & Learning Platform</h1>
+    <p>Test your knowledge on Namibian History, Culture and Computer Science Basics.
+      <br>
+    </p>
+    
+    <div class="links">
+      <a href="login.php" class="login-btn">Student Login</a><br><br>
+      <a href="lessons.php" class="login-btn">Go to Lessons</a><br><br>
+      <a href="quiz.php" class="login-btn">Take a Quiz</a>
+    </div>
+
+    
+    <p>© 2025 Quiz & Learning Platform | Developed by Group 58</p>
+  </div>
+  </header>
+    
+</body>
