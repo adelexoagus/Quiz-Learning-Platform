@@ -1,38 +1,45 @@
-function toggleAccordion(header) {
-  const content = header.nextElementSibling;
-  const isOpen = content.classList.contains('active');
-
-  // Close all open accordions first 
-  document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('active'));
-
-  // Toggle current one
-  if (!isOpen) {
-    content.classList.add('active');
+function toggleAccordion(element) {
+  const content = element.nextElementSibling;
+  if(content.style.display === "block") {
+    content.style.display = "none";
+  } else {
+    content.style.display = "block";
   }
 }
 
-// Change Cursor on Hover
-document.querySelectorAll('.accordion-header').forEach(header => {
-  header.style.cursor = 'pointer';
+let currentQuestion = 0;
+let score = 0;
+let questions = [];
+
+async function loadQuestions() {
+  const res = await fetch('php/get_questions.php');
+  questions = await res.json();
+  showQuestion();
+}
+
+function showQuestion() {
+  if(currentQuestion >= questions.length) {
+    localStorage.setItem("quizScore", score);
+    window.location.href = "results.html";
+    return;
+  }
+  
+  const q = questions[currentQuestion];
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = `
+    <h3>${q.question}</h3>
+    ${q.options.map((opt, i) => `<button onclick="answer(${i})">${opt}</button>`).join('')}
+  `;
+}
+
+function answer(index) {
+  if(index === questions[currentQuestion].answer) score++;
+  currentQuestion++;
+  showQuestion();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if(document.getElementById('quiz-container')) {
+    loadQuestions();
+  }
 });
-
-//Lesson Card Navigation
-
-let currentIndex = 0;
-const cards = document.querySelectorAll('.lesson-card');
-
-function showCard(index) {
-  cards.forEach((card, i) => {
-    card.classList.toggle('active', i === index);
-  });
-}
-
-function nextCard() {
-  currentIndex = (currentIndex + 1) % cards.length;
-  showCard(currentIndex);
-}
-
-function prevCard() {
-  currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-  showCard(currentIndex);
-}
